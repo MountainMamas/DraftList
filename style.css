@@ -576,6 +576,10 @@ footer{
 
 @media(max-width:900px){
 
+   body{
+      background: var(--navy);
+   }
+   
     main{
 
         padding:20px;
@@ -583,7 +587,8 @@ footer{
     }
 
     header img {
-        width: 80vw;
+        width: 75px;
+         height: 75px;
 
         aspect-ratio: 1/1;
     }
