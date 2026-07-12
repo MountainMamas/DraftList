@@ -151,7 +151,7 @@ onSnapshot(beerCollection,(snapshot)=>{
         heading.className="style-heading";
 
 
-        heading.innerHTML=`🍺 ${description}'s`;
+        heading.innerHTML=`🍺 ${description}s`;
 
 
         beerList.appendChild(
