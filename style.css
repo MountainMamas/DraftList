@@ -27,7 +27,11 @@ body{
 
     font-family:'Roboto',sans-serif;
 
-    background:var(--navy);
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("assets/barpic.jpeg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
 
     color:var(--white);
 
@@ -49,11 +53,7 @@ header{
 
     position:relative;
 
-    padding:35px;
-
-    border-bottom:4px solid var(--gold);
-
-    background:#001d3d;
+    padding: 20px 5px 0 5px;
 
 }
 
@@ -67,7 +67,7 @@ header{
 
     font-family: 'Noto Serif';
 
-    font-size:2rem;
+    font-size: 2rem;
 
     color:var(--gold);
 
@@ -79,9 +79,9 @@ header{
 
 .title h2{
 
-    font-family: 'Noto Serif';
+    font-family: 'Oswald',sans-serif;
 
-    font-size:3.2rem;
+    font-size:6rem;
     
     text-decoration: underline;
 
@@ -93,6 +93,16 @@ header{
 
 }
 
+.title img {
+    margin: 0;
+
+    padding: 0;
+
+    width: 150px;
+
+    height: fit-content;
+
+}
 /* ===========================
       Edit Button
 =========================== */
@@ -155,6 +165,25 @@ main{
 
     gap:18px;
 
+    background-color: rgba(0,0,0,0.25);
+
+    padding: 50px;
+
+    border-radius: 50px;
+}
+
+#beerlist h2 {
+    font-family: 'Oswald',sans-serif;
+
+    font-size:4rem;
+    
+    text-decoration: underline;
+
+    color:white;
+
+    font-weight:300;
+
+    margin-top:8px;
 }
 
 /* ===========================
