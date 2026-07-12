@@ -27,7 +27,7 @@ body{
 
     font-family:'Roboto',sans-serif;
 
-    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("assets/barpic.jpeg");
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("barpic.jpeg");
     background-size: 100vw 100vh;
     background-repeat: no-repeat;
     background-attachment: fixed;
