@@ -27,8 +27,8 @@ body{
 
     font-family:'Roboto',sans-serif;
 
-    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("barpic.jpeg");
-    background-size: 100%;
+    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("assets/barpic.jpeg");
+    background-size: 100vw 100vh;
     background-repeat: no-repeat;
     background-attachment: fixed;
 
@@ -101,6 +101,8 @@ header{
     width: 150px;
 
     height: fit-content;
+
+    aspect-ratio: 1/1;
 
 }
 /* ===========================
@@ -578,6 +580,12 @@ footer{
 
         padding:20px;
 
+    }
+
+    header img {
+        width: 80vw;
+
+        aspect-ratio: 1/1;
     }
 
     #beerList{
