@@ -105,25 +105,77 @@ const addBeerButton = document.getElementById("addBeer");
 onSnapshot(beerCollection,(snapshot)=>{
 
 
-    beerList.innerHTML = "";
+    beerList.innerHTML="";
+
+
+    let grouped = {};
 
 
     snapshot.forEach((document)=>{
 
 
-        const beer = document.data();
+        const beer=document.data();
 
-        createBeerCard(
-            beer,
-            document.id
+
+        const description = beer.description || "Other";
+
+
+        if(!grouped[description]){
+
+            grouped[description]=[];
+
+        }
+
+
+        grouped[description].push({
+
+            ...beer,
+
+            id:document.id
+
+        });
+
+
+    });
+
+
+
+    Object.keys(grouped)
+    .sort()
+    .forEach(description=>{
+
+
+        const heading=document.createElement("h2");
+
+
+        heading.className="style-heading";
+
+
+        heading.innerHTML=`🍺 ${description}`;
+
+
+        beerList.appendChild(
+            heading
         );
+
+
+
+        grouped[description].forEach(beer=>{
+
+
+            createBeerCard(
+                beer,
+                beer.id
+            );
+
+
+        });
 
 
     });
 
 
 });
-
 
 
 // ===========================================
