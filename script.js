@@ -65,7 +65,7 @@ const beerCollection = collection(db,"drafts");
 // ===========================================
 
 
-const PASSWORD = "beer123";
+const PASSWORD = "HueyIsMyBitch";
 
 let editMode = false;
 
