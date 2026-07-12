@@ -67,11 +67,13 @@ header{
 
     font-family: 'Noto Serif';
 
-    font-size:3rem;
+    font-size:2rem;
 
     color:var(--gold);
 
     letter-spacing:2px;
+
+    text-wrap: nowrap;
 
 }
 
