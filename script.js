@@ -1,45 +1,87 @@
-// =======================================
+// ===========================================
 // Mountain Mamas Draft List
-// =======================================
+// Firebase Firestore Version
+// ===========================================
 
-const PASSWORD = "HueyIsMyBitch";
+
+// Firebase Imports
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+
+    getFirestore,
+    collection,
+    addDoc,
+    deleteDoc,
+    doc,
+    onSnapshot
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+
+// ===========================================
+// Firebase Configuration
+// Replace with your Firebase information
+// ===========================================
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyBnt2LTha-opamevW1jXpc9727xUkDobTg",
+
+    authDomain: "mountain-mamas-draf-list.firebaseapp.com",
+
+    projectId: "mountain-mamas-draf-list",
+
+    storageBucket: "mountain-mamas-draf-list.firebasestorage.app",
+
+    messagingSenderId: "336892573672",
+
+    appId: "1:336892573672:web:7cd733d734f1b23cc3165d"
+
+};
+
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+// Firestore collection
+
+const beerCollection = collection(db,"drafts");
+
+
+
+// ===========================================
+// Admin Password
+// ===========================================
+
+
+const PASSWORD = "beer123";
 
 let editMode = false;
 
-// Default beers
-let beers = JSON.parse(localStorage.getItem("draftList")) || [
-    {
-        name: "Miller Lite",
-        brewery: "Miller Brewing Company",
-        description: "American Light Lager",
-        abv: "4.2%",
-        price: "$4.00"
-    },
-    {
-        name: "Yuengling",
-        brewery: "D.G. Yuengling & Son",
-        description: "Traditional Lager",
-        abv: "4.5%",
-        price: "$5.00"
-    },
-    {
-        name: "Blue Moon",
-        brewery: "Blue Moon Brewing",
-        description: "Belgian White Ale",
-        abv: "5.4%",
-        price: "$6.00"
-    }
-];
 
-// =======================================
-// Elements
-// =======================================
+
+// ===========================================
+// HTML Elements
+// ===========================================
+
 
 const beerList = document.getElementById("beerList");
 
 const editButton = document.getElementById("editButton");
 
 const adminPanel = document.getElementById("adminPanel");
+
 
 const modal = document.getElementById("loginModal");
 
@@ -49,228 +91,447 @@ const loginButton = document.getElementById("loginButton");
 
 const cancelButton = document.getElementById("cancelLogin");
 
+
 const addBeerButton = document.getElementById("addBeer");
 
-// =======================================
 
-function saveBeers() {
 
-    localStorage.setItem(
-        "draftList",
-        JSON.stringify(beers)
-    );
+// ===========================================
+// Real-Time Beer Loading
+// Everyone sees updates instantly
+// ===========================================
 
-}
 
-// =======================================
+onSnapshot(beerCollection,(snapshot)=>{
 
-function renderBeers() {
 
     beerList.innerHTML = "";
 
-    beers.forEach((beer, index) => {
 
-        const card = document.createElement("div");
+    snapshot.forEach((document)=>{
 
-        card.className = "beer-card";
 
-        card.innerHTML = `
+        const beer = document.data();
 
-            <div class="beer-info">
+        createBeerCard(
+            beer,
+            document.id
+        );
 
-                <h3>${beer.name}</h3>
-
-                <p class="brewery">
-                    ${beer.brewery}
-                </p>
-
-                <p class="description">
-                    ${beer.description}
-                </p>
-
-            </div>
-
-            <div class="beer-details">
-
-                <span class="abv">
-                    ${beer.abv} ABV
-                </span>
-
-                <span class="price">
-                    ${beer.price}
-                </span>
-
-            </div>
-
-            ${
-                editMode
-                ?
-                `<button class="delete" onclick="deleteBeer(${index})">✕</button>`
-                :
-                ""
-            }
-
-        `;
-
-        beerList.appendChild(card);
 
     });
 
+
+});
+
+
+
+// ===========================================
+// Create Beer Card
+// ===========================================
+
+
+function createBeerCard(beer,id){
+
+
+    const card = document.createElement("div");
+
+
+    card.className="beer-card";
+
+
+    card.innerHTML = `
+
+
+        <div class="beer-info">
+
+
+            <h3>
+                ${beer.name}
+            </h3>
+
+
+            <p class="brewery">
+
+                ${beer.brewery}
+
+            </p>
+
+
+            <p class="description">
+
+                ${beer.description}
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="beer-details">
+
+
+            <span class="abv">
+
+                ${beer.abv} ABV
+
+            </span>
+
+
+            <span class="price">
+
+                ${beer.price}
+
+            </span>
+
+
+        </div>
+
+
+        ${
+            editMode
+
+            ?
+
+            `
+
+            <button 
+            class="delete"
+            onclick="deleteBeer('${id}')">
+
+                ✕
+
+            </button>
+
+            `
+
+            :
+
+            ""
+
+        }
+
+
+    `;
+
+
+
+    beerList.appendChild(card);
+
+
 }
 
-// =======================================
 
-function deleteBeer(index) {
 
-    beers.splice(index, 1);
+// ===========================================
+// Delete Beer
+// ===========================================
 
-    saveBeers();
 
-    renderBeers();
+async function deleteBeer(id){
+
+
+    await deleteDoc(
+
+        doc(
+            db,
+            "drafts",
+            id
+        )
+
+    );
+
 
 }
+
+
 
 window.deleteBeer = deleteBeer;
 
-// =======================================
-// Login Modal
-// =======================================
 
-editButton.addEventListener("click", () => {
+
+
+// ===========================================
+// Open Login
+// ===========================================
+
+
+editButton.addEventListener(
+"click",
+()=>{
+
 
     if(editMode){
 
-        editMode = false;
 
-        adminPanel.classList.add("hidden");
+        editMode=false;
 
-        editButton.innerHTML = "⚙ Edit";
 
-        renderBeers();
+        adminPanel.classList.add(
+            "hidden"
+        );
+
+
+        editButton.innerHTML="⚙ Edit";
+
+
+        refreshCards();
+
 
         return;
 
+
     }
 
-    modal.classList.remove("hidden");
 
-    passwordInput.value = "";
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+
+    passwordInput.value="";
+
 
     passwordInput.focus();
 
-});
-
-// =======================================
-
-cancelButton.addEventListener("click", () => {
-
-    modal.classList.add("hidden");
 
 });
 
-// =======================================
 
-loginButton.addEventListener("click", login);
 
-// =======================================
+// ===========================================
+// Cancel Login
+// ===========================================
 
-passwordInput.addEventListener("keydown", (event)=>{
 
-    if(event.key === "Enter"){
+cancelButton.addEventListener(
+"click",
+()=>{
+
+
+    modal.classList.add(
+        "hidden"
+    );
+
+
+});
+
+
+
+
+// ===========================================
+// Login
+// ===========================================
+
+
+loginButton.addEventListener(
+"click",
+login
+);
+
+
+
+passwordInput.addEventListener(
+"keydown",
+(event)=>{
+
+
+    if(event.key==="Enter"){
 
         login();
 
     }
 
+
 });
 
-// =======================================
+
+
 
 function login(){
 
-    if(passwordInput.value === PASSWORD){
 
-        modal.classList.add("hidden");
 
-        editMode = true;
+    if(passwordInput.value===PASSWORD){
 
-        adminPanel.classList.remove("hidden");
 
-        editButton.innerHTML = "Logout";
 
-        renderBeers();
+        editMode=true;
+
+
+
+        modal.classList.add(
+            "hidden"
+        );
+
+
+        adminPanel.classList.remove(
+            "hidden"
+        );
+
+
+        editButton.innerHTML="Logout";
+
+
+        refreshCards();
+
+
 
     }
 
     else{
 
-        alert("Incorrect Password");
 
-        passwordInput.value = "";
+        alert(
+            "Incorrect Password"
+        );
 
-        passwordInput.focus();
+
+        passwordInput.value="";
+
 
     }
+
 
 }
 
-// =======================================
+
+
+
+
+// ===========================================
+// Refresh cards after edit mode changes
+// ===========================================
+
+
+function refreshCards(){
+
+
+    onSnapshot(
+        beerCollection,
+        (snapshot)=>{
+
+
+            beerList.innerHTML="";
+
+
+            snapshot.forEach(
+            (document)=>{
+
+
+                createBeerCard(
+
+                    document.data(),
+
+                    document.id
+
+                );
+
+
+            });
+
+
+        }
+    );
+
+
+}
+
+
+
+
+// ===========================================
 // Add Beer
-// =======================================
+// ===========================================
 
-addBeerButton.addEventListener("click", ()=>{
 
-    const name =
-        document.getElementById("beerName").value.trim();
+addBeerButton.addEventListener(
+"click",
+async ()=>{
 
-    const brewery =
-        document.getElementById("brewery").value.trim();
 
-    const description =
-        document.getElementById("description").value.trim();
+    const beer = {
 
-    const abv =
-        document.getElementById("abv").value.trim();
 
-    const price =
-        document.getElementById("price").value.trim();
+        name:
+        document.getElementById(
+            "beerName"
+        ).value,
+
+
+        brewery:
+        document.getElementById(
+            "brewery"
+        ).value,
+
+
+        description:
+        document.getElementById(
+            "description"
+        ).value,
+
+
+        abv:
+        document.getElementById(
+            "abv"
+        ).value,
+
+
+        price:
+        document.getElementById(
+            "price"
+        ).value
+
+
+    };
+
+
 
     if(
-        name === "" ||
-        brewery === "" ||
-        description === "" ||
-        abv === "" ||
-        price === ""
+
+        !beer.name ||
+        !beer.brewery ||
+        !beer.description ||
+        !beer.abv ||
+        !beer.price
+
     ){
 
-        alert("Please complete every field.");
+
+        alert(
+            "Please fill in all fields."
+        );
+
 
         return;
 
+
     }
 
-    beers.push({
 
-        name,
-        brewery,
-        description,
-        abv,
-        price
 
-    });
 
-    saveBeers();
+    await addDoc(
 
-    renderBeers();
+        beerCollection,
 
-    document.getElementById("beerName").value = "";
-    document.getElementById("brewery").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("abv").value = "";
-    document.getElementById("price").value = "";
+        beer
+
+    );
+
+
+
+
+    document
+    .querySelectorAll(
+        "#adminPanel input"
+    )
+    .forEach(
+        input=>input.value=""
+    );
+
+
 
 });
-
-// =======================================
-
-renderBeers();
