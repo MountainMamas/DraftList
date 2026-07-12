@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Mamas Draft List</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="title">
+
+        <h1>🍺 Mountain Mamas 🍺</h1>
+        <h2>Draft List</h2>
+
+    </div>
+
+    <button id="editButton">
+        ⚙ Edit
+    </button>
+
+</header>
+
+<main>
+
+    <section id="beerList">
+
+        <!-- Example Beer -->
+
+        <div class="beer-card">
+
+            <div class="beer-info">
+
+                <h3>Miller Lite</h3>
+
+                <p class="brewery">
+                    Miller Brewing Company
+                </p>
+
+                <p class="description">
+                    American Light Lager
+                </p>
+
+            </div>
+
+            <div class="beer-details">
+
+                <span class="abv">
+                    4.2% ABV
+                </span>
+
+                <span class="price">
+                    $4.00
+                </span>
+
+            </div>
+
+            <button class="delete hidden">
+                ✕
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- ========================= -->
+<!-- Admin Panel -->
+<!-- ========================= -->
+
+<section id="adminPanel" class="hidden">
+
+    <h2>Add New Draft</h2>
+
+    <input
+        type="text"
+        id="beerName"
+        placeholder="Beer Name"
+    >
+
+    <input
+        type="text"
+        id="brewery"
+        placeholder="Brewery"
+    >
+
+    <input
+        type="text"
+        id="description"
+        placeholder="Style / Description"
+    >
+
+    <input
+        type="text"
+        id="abv"
+        placeholder="ABV (Example: 6.8%)"
+    >
+
+    <input
+        type="text"
+        id="price"
+        placeholder="Price (Example: $6.50)"
+    >
+
+    <button id="addBeer">
+        Add Draft Beer
+    </button>
+
+</section>
+
+<!-- ========================= -->
+<!-- Password Modal -->
+<!-- ========================= -->
+
+<div id="loginModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <h2>Administrator Login</h2>
+
+        <p>
+            Enter the password to edit the draft list.
+        </p>
+
+        <input
+            type="password"
+            id="passwordInput"
+            placeholder="Password"
+        >
+
+        <div class="modal-buttons">
+
+            <button id="cancelLogin">
+                Cancel
+            </button>
+
+            <button id="loginButton">
+                Unlock
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <p>
+        Please drink responsibly.
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
