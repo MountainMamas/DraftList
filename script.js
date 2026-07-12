@@ -231,11 +231,6 @@ function createBeerCard(beer,id){
             </span>
 
 
-            <span class="price">
-
-                ${beer.price}
-
-            </span>
 
 
         </div>
